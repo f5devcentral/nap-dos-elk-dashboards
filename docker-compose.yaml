@@ -1,0 +1,21 @@
+version: "2.3"
+services:
+  elasticsearch:
+    image: .
+    restart: always
+    volumes:
+      - ./logstash/conf.d:/etc/logstash/conf.d:ro
+      - elk:/var/lib/elasticsearch
+    ports:
+      - 9200:9200
+      - 5601:5601
+      - 5261:5261/tcp
+      - 5561:5561/udp
+volumes:
+  elk:
+networks:
+  default:
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.33.0.0/16
