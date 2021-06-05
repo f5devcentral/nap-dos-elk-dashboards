@@ -39,15 +39,15 @@ docker-compose -f docker-compose.yaml up -d
 2. Verify the installation by logging into Kibana via a browser at `http://< your container host>:5601/`
 
 **NOTE**
-- It assumed that your current working directory is `nap-dos-elk-dashboards`. This name will be automatically prepended to the name of the ELK docker container, and is assumed in the instructions below.
+- It assumed that your current working directory is `nap-dos-elk-dashboards`. This name (with dashes removed) will be automatically prepended to the name of the ELK docker container, and is assumed in the instructions below.
 - The `logstash` folder will be created in the working directory.
 - The `logstash/conf.d` folder is mapped to `/etc/logstash/conf.d` in the ELK container.
 
 
-3. Open a terminal into the container:
+3. Open a new terminal window and ssh into the container:
 
 ```shell
-docker exec -it nap-dos-elk-dashboards_elasticsearch_1 /bin/bash
+docker exec -it napdoselkdashboards_elasticsearch_1 /bin/bash
 ```
 
 4. From inside the container, stop the `logstash` process:
@@ -71,16 +71,14 @@ service logstash stop
 cat /etc/logstash/conf.d/apdos-logstash.conf
 ```
 
-7. Type the `exit` command to leave the container shell.
-
-8. From outside the container, create the Elasticsearch index with the following cURL command:
+7. From outside the container, create the Elasticsearch index with the following cURL command:
 
 ```shell
 curl -XPUT "http://localhost:9200/app-protect-dos-logs"  -H "Content-Type: application/json" -d  @apdos_mapping.json
 ```
 
 **NOTE**
-In case there is error in this step, it may indicate that the `app-protect-dos-logs` index already exists from a previous Kibana installations. If so, you will need to delete the index with the following cURL command:
+In case there is error in this step, it may indicate that the `app-protect-dos-logs` index already exists from a previous Kibana installation, or has been created automatically by Logstash processing incoming App Protect DoS messages. If so, you will need to delete the index with the following cURL command:
 
 ```shell
 curl -XDELETE http://localhost:9200/app-protect-dos-logs
@@ -92,37 +90,37 @@ To verify that `app-protect-dos-logs` index has been deleted:
 curl -XGET "http://localhost:9200/_cat/indices"
 ```
 
-The result should not include an `app-protect-dos-logs` index.
+The result should not include an `app-protect-dos-logs` index. Then, re-attempt to create the index using the instructions in the step above.
 
 
-9. Update mapping with geo fields:
+8. Update mapping with geo fields:
 
 ```shell
 curl -XPOST "http://localhost:9200/app-protect-dos-logs/_mapping"  -H "Content-Type: application/json" -d  @apdos_geo_mapping.json
 ```
 
-10. Import dashboards to Kibana through the UI (Kibana -> Management -> Saved Objects) or alternatively, use API call below:
+9. Import dashboards to Kibana through the UI (Kibana -> Management -> Saved Objects) or alternatively, use API call below:
 
 ```shell
 
 KIBANA_CONTAINER_URL=http://localhost:5601
 
-./jq -s . kibana/apdos-dashboard.ndjson | ./jq '{"objects": . }' | \
+jq -s . kibana/apdos-dashboard.ndjson | jq '{"objects": . }' | \
 curl -k --location --request POST "$KIBANA_CONTAINER_URL/api/kibana/dashboards/import" \
     --header 'kbn-xsrf: true' \
     --header 'Content-Type: text/plain' -d @- \
-    | ./jq
+    | jq
 
 ```
 
-11. Start Logstash from inside the container:
+10. Start Logstash from inside the container:
 
 ```shell
 service logstash start
 ```
 
 ### NGINX App Protect Configuration
-NGINX App Protect DoS configuration directives as should appear in your nginx.conf:
+NGINX App Protect DoS configuration directives as should appear in your `nginx.conf`. You will need to replace `ip_kibana` in the snippet below with the hostname of the server hosting your ELK Docker container:
 
 ```
 http {
