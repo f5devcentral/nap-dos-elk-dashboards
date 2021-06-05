@@ -1,7 +1,7 @@
 version: "2.3"
 services:
   elasticsearch:
-    image: .
+    image: sebp/elk:793
     restart: always
     volumes:
       - ./logstash/conf.d:/etc/logstash/conf.d:ro
