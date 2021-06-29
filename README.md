@@ -38,7 +38,7 @@ docker-compose -f docker-compose.yaml up -d
 
 2. Verify the installation by logging into Kibana via a browser at `http://< your container host>:5601/`
 
-**NOTE**
+**NOTE:**
 - It assumed that your current working directory is `nap-dos-elk-dashboards`. This name (with dashes removed) will be automatically prepended to the name of the ELK docker container, and is assumed in the instructions below.
 - The `logstash` folder will be created in the working directory.
 - The `logstash/conf.d` folder is mapped to `/etc/logstash/conf.d` in the ELK container.
@@ -77,7 +77,7 @@ cat /etc/logstash/conf.d/apdos-logstash.conf
 curl -XPUT "http://localhost:9200/app-protect-dos-logs"  -H "Content-Type: application/json" -d  @apdos_mapping.json
 ```
 
-**NOTE**
+**NOTE:**
 In case there is error in this step, it may indicate that the `app-protect-dos-logs` index already exists from a previous Kibana installation, or has been created automatically by Logstash processing incoming App Protect DoS messages. If so, you will need to delete the index with the following cURL command:
 
 ```shell
@@ -146,7 +146,7 @@ http {
 }
 ```
 
-**NOTE**
+**NOTE:**
 The Logstash listener in this solution is configured to listen for TCP syslog messages on port `5261` and UDP port `5561`. Kibana and Elasticsearch are using TCP ports `9200`, `5601` respectively.
 These ports must be opened on your firewall for TCP/UDP accordingly.
 
@@ -157,6 +157,6 @@ Using the dashboard filter:
 As an example, for protected object name "example.com", the filter should be as follows:
 `vs_name_al : "example.com/"  or vs_name : "example.com/"`
 
-**NOTE**
+**NOTE:**
 `vs_name_al` and `vs_name` must be both at dashboard filter level, and be connected with: "or".
 
