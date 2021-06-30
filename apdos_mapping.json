@@ -160,6 +160,12 @@
       "threshold_conns": {
         "type": "float"
       },
+      "tls_fp": {
+        "type": "keyword"
+      },
+      "ip_tls": {
+        "type": "keyword"
+      },
       "threshold_rps": {
         "type": "float"
       },
