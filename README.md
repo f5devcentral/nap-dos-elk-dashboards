@@ -124,7 +124,7 @@ NGINX App Protect DoS configuration directives as should appear in your `nginx.c
 
 ```
 http {
-    log_format log_dos ', vs_name_al=$app_protect_dos_vs_name, ip=$remote_addr, outcome=$app_protect_dos_outcome, reason=$app_protect_dos_outcome_reason, ';
+    log_format log_dos ', vs_name_al=$app_protect_dos_vs_name, ip=$remote_addr, tls_fp=$app_protect_dos_tls_fp, outcome=$app_protect_dos_outcome, reason=$app_protect_dos_outcome_reason, policy_name=$app_protect_dos_policy_name, dos_version=$app_protect_dos_version, ip_tls=$remote_addr:$app_protect_dos_tls_fp, ';
     ...
     server {
        ...
