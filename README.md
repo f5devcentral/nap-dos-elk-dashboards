@@ -119,7 +119,7 @@ curl -k --location --request POST "$KIBANA_CONTAINER_URL/api/kibana/dashboards/i
 service logstash start
 ```
 
-### NGINX App Protect Configuration
+### NGINX App Protect DoS Configuration
 NGINX App Protect DoS configuration directives as should appear in your `nginx.conf`. You will need to replace `ip_kibana` in the snippet below with the hostname of the server hosting your ELK Docker container:
 
 ```
@@ -160,3 +160,67 @@ As an example, for protected object name "example.com", the filter should be as 
 **NOTE:**
 `vs_name_al` and `vs_name` must be both at dashboard filter level, and be connected with: "or".
 
+## Installing Both App Protect WAF and App Protect DoS Dashboards
+
+Both the [App Protect WAF](https://github.com/f5devcentral/f5-waf-elk-dashboards) and DoS Dashboards (this repo) can work in parallel on the same ELK instance. However some preparation is necessary to ensure they will run successfully in parallel with each other.
+
+1. Clone the [f5-waf-elk-dashboards](https://github.com/f5devcentral/f5-waf-elk-dashboards) and App Protect DoS Dashboards (this repo) using the following commands:
+
+```shell
+git clone https://github.com/f5devcentral/f5-waf-elk-dashboards.git
+git clone https://github.com/f5devcentral/nap-dos-elk-dashboards.git
+```
+
+2. Copy the `apdos-logstash.conf` file to the `f5-waf-elk-dashboards` working directory:
+```shell
+cp nap-dos-elk-dashboards/logstash/conf.d/apdos-logstash.conf f5-waf-elk-dashboards/logstash/conf.d/
+```
+
+3. Create a `f5-waf-elk-dashboards/logstash/pipelines.yml` file with the following contents:
+```yaml
+- pipeline.id: napwaf
+  path.config: "/opt/logstash/config/30-waf-logs-full-logstash.conf"
+
+- pipeline.id: napdos
+  path.config: "/opt/logstash/config/apdos-logstash.conf"
+```
+
+4. The `f5-waf-elk-dashboards/docker-compose.yaml` needs to be modified to accommodate 3 necessary changes: the version of the ELK container image used, additional syslog ports are required, and Logstash's [Multiple Pipelines](https://www.elastic.co/blog/logstash-multiple-pipelines) feature needs to be used in order to isolate the message flows. A properly modified `docker-compose.yaml` will look like this:
+
+```yaml
+version: "2.4"
+services:
+  elasticsearch:
+    image: sebp/elk:793
+    restart: always
+    volumes:
+      - ./logstash/pipelines.yml:/opt/logstash/config/pipelines.yml:ro
+      - ./logstash/conf.d/30-waf-logs-full-logstash.conf:/opt/logstash/config/30-waf-logs-full-logstash.conf:ro
+      - ./logstash/conf.d/apdos-logstash.conf:/opt/logstash/config/apdos-logstash.conf:ro
+      - elk:/var/lib/elasticsearch
+    ports:
+      - 9200:9200/tcp
+      - 5601:5601/tcp
+      - 5144:5144/tcp
+      - 5261:5261/tcp
+      - 5561:5561/udp
+volumes:
+  elk:
+
+```
+
+5. Change to the `nap-dos-elk-dashboards` directory:
+``` shell
+cd nap-dos-elk-dashboards
+```
+
+6. Follow the [Deploying ELK Stack](#deploying-elk-stack) instructions in this document, and advance to step 7 in this guide when complete.
+
+7. Change to the `f5-waf-elk-dashboards` directory:
+``` shell
+cd f5-waf-elk-dashboards
+```
+
+8. Follow the [Deploying ELK Stack](https://github.com/f5devcentral/f5-waf-elk-dashboards#deploying-elk-stack) instructions in the f5-waf-elk-dashboards README document.
+
+**NOTE:** The `app-protect-dos-logs` Elasticsearch index must be the default index, or the NGINX App Protect DoS dashboard will not display properly.
