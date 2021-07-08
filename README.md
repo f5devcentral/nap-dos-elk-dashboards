@@ -222,5 +222,3 @@ cd f5-waf-elk-dashboards
 ```
 
 8. Follow the [Deploying ELK Stack](https://github.com/f5devcentral/f5-waf-elk-dashboards#deploying-elk-stack) instructions in the f5-waf-elk-dashboards README document.
-
-**NOTE:** The `app-protect-dos-logs` Elasticsearch index must be the default index, or the NGINX App Protect DoS dashboard will not display properly.
