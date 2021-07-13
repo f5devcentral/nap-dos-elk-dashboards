@@ -43,8 +43,7 @@ docker-compose -f docker-compose.yaml up -d
 - The `logstash` folder will be created in the working directory.
 - The `logstash/conf.d` folder is mapped to `/etc/logstash/conf.d` in the ELK container.
 
-
-3. Open a new terminal window and ssh into the container:
+3. Open a *new* terminal window and ssh into the Elasticsearch container:
 
 ```shell
 docker exec -it napdoselkdashboards_elasticsearch_1 /bin/bash
@@ -71,7 +70,7 @@ service logstash stop
 cat /etc/logstash/conf.d/apdos-logstash.conf
 ```
 
-7. From outside the container, create the Elasticsearch index with the following cURL command:
+7. In your *original* terminal window (outside the container), create the Elasticsearch index with the following cURL command:
 
 ```shell
 curl -XPUT "http://localhost:9200/app-protect-dos-logs"  -H "Content-Type: application/json" -d  @apdos_mapping.json
@@ -91,7 +90,6 @@ curl -XGET "http://localhost:9200/_cat/indices"
 ```
 
 The result should not include an `app-protect-dos-logs` index. Then, re-attempt to create the index using the instructions in the step above.
-
 
 8. Update mapping with geo fields:
 
@@ -113,7 +111,7 @@ curl -k --location --request POST "$KIBANA_CONTAINER_URL/api/kibana/dashboards/i
 
 ```
 
-10. Start Logstash from inside the container:
+10. From your terminal window *inside* the container, start Logstash:
 
 ```shell
 service logstash start
@@ -209,16 +207,22 @@ volumes:
 
 ```
 
-5. Change to the `nap-dos-elk-dashboards` directory:
-``` shell
-cd nap-dos-elk-dashboards
-```
-
-6. Follow the [Deploying ELK Stack](#deploying-elk-stack) instructions in this document, and advance to step 7 in this guide when complete.
-
-7. Change to the `f5-waf-elk-dashboards` directory:
+5. Change to the `f5-waf-elk-dashboards` directory:
 ``` shell
 cd f5-waf-elk-dashboards
 ```
 
-8. Follow the [Deploying ELK Stack](https://github.com/f5devcentral/f5-waf-elk-dashboards#deploying-elk-stack) instructions in the f5-waf-elk-dashboards README document.
+6. Follow the [Deploying ELK Stack](https://github.com/f5devcentral/f5-waf-elk-dashboards#deploying-elk-stack) instructions in the f5-waf-elk-dashboards README document, then advance to step 7 in this guide when complete.
+
+7. Change to the `nap-dos-elk-dashboards` directory:
+``` shell
+cd ../nap-dos-elk-dashboards
+```
+
+8. Open a *new* terminal window and ssh into the Elasticsearch container:
+
+```shell
+docker exec -it f5-waf-elk-dashboards_elasticsearch_1 /bin/bash
+```
+
+9. Follow the [Deploying ELK Stack](#deploying-elk-stack) instructions starting at step 4.
