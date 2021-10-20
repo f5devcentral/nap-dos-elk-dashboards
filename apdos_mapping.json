@@ -22,7 +22,7 @@
       "bad_actors": {
         "type": "integer"
       },
-      "baseline_tps": {
+      "baseline_dps": {
         "type": "integer"
       },
       "facility": {
@@ -151,7 +151,7 @@
       "successful_tps": {
         "type": "integer"
       },
-      "successful_transactions": {
+      "incoming_datagrams": {
         "type": "integer"
       },
       "tags": {
@@ -166,16 +166,19 @@
       "ip_tls": {
         "type": "keyword"
       },
-      "threshold_rps": {
+      "threshold_dps": {
         "type": "float"
       },
       "unit_hostname": {
         "type": "keyword"
       },
-      "unsuccessful_requests_count": {
+      "incoming_dps": {
         "type": "integer"
       },
       "unsuccessful_rps": {
+        "type": "integer"
+      },
+      "unsuccessful_requests": {
         "type": "integer"
       },
       "vs_name": {
