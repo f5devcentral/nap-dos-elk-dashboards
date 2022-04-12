@@ -46,7 +46,7 @@ docker-compose -f docker-compose.yaml up -d
 3. Open a *new* terminal window and ssh into the Elasticsearch container:
 
 ```shell
-docker exec -it napdoselkdashboards_elasticsearch_1 /bin/bash
+docker exec -it nap-dos-elk-dashboards_elasticsearch_1 /bin/bash
 ```
 
 4. From inside the container, stop the `logstash` process:
