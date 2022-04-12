@@ -39,14 +39,14 @@ docker-compose -f docker-compose.yaml up -d
 2. Verify the installation by logging into Kibana via a browser at `http://< your container host>:5601/`
 
 **NOTE:**
-- It assumed that your current working directory is `nap-dos-elk-dashboards`. This name (with dashes removed) will be automatically prepended to the name of the ELK docker container, and is assumed in the instructions below.
+- It assumed that your current working directory is `nap-dos-elk-dashboards`.
 - The `logstash` folder will be created in the working directory.
 - The `logstash/conf.d` folder is mapped to `/etc/logstash/conf.d` in the ELK container.
 
 3. Open a *new* terminal window and ssh into the Elasticsearch container:
 
 ```shell
-docker exec -it napdoselkdashboards_elasticsearch_1 /bin/bash
+docker exec -it nap-dos-elk-dashboards_elasticsearch_1 /bin/bash
 ```
 
 4. From inside the container, stop the `logstash` process:
