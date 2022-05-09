@@ -1,7 +1,7 @@
 version: "2.3"
 services:
   elasticsearch:
-    image: sebp/elk:7.16.1
+    image: sebp/elk:7.17.1
     restart: always
     volumes:
       - ./logstash/conf.d:/etc/logstash/conf.d:ro
@@ -19,3 +19,4 @@ networks:
       driver: default
       config:
         - subnet: 172.33.0.0/16
+
