@@ -25,12 +25,6 @@
       "baseline_dps": {
         "type": "integer"
       },
-      "facility": {
-        "type": "long"
-      },
-      "facility_label": {
-        "type": "keyword"
-      },
       "host": {
         "type": "keyword"
       },
@@ -115,29 +109,20 @@
       "new_bad_actors_detected": {
         "type": "integer"
       },
-      "priority": {
-        "type": "long"
-      },
       "product": {
         "type": "keyword"
       },
       "product_version": {
         "type": "keyword"
       },
-      "severity": {
-        "type": "keyword"
-      },
-      "severity_label": {
-        "type": "keyword"
-      },
       "signature": {
         "type": "keyword"
       },
       "signature_accuracy": {
-        "type": "keyword"
+        "type": "float"
       },
       "signature_efficiency": {
-        "type": "keyword"
+        "type": "float"
       },
       "signature_id": {
         "type": "long"
