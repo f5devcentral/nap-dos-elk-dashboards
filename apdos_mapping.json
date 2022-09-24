@@ -166,6 +166,9 @@
       "unsuccessful_requests": {
         "type": "integer"
       },
+      "mitigated_bad_actors_l4_rps": {
+        "type": "integer"
+      },
       "vs_name": {
         "type": "keyword"
       },
