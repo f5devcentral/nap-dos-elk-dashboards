@@ -9,7 +9,7 @@ ELK stands for Elasticsearch, Logstash, and Kibana. Logstash receives logs from 
 ## Requirements
 - The installation instructions assume you are using a bash or zsh shell. The [Docker](https://docker.com), [docker-compose](https://docs.docker.com/compose/) and [jq](https://stedolan.github.io/jq/) packages are also assumed to be installed.
 
-- The provided Kibana dashboards require a minimum version of 7.9.3. If you are using the provided [docker-compose.yaml](docker-compose.yaml) file, this version requirement is met.
+- The provided Kibana dashboards require a minimum version of 8.11.1. If you are using the provided [docker-compose.yaml](docker-compose.yaml) file, this version requirement is met.
 
 - In `docker-compose.yaml`, the subnet configuration is added in order to override the ip assignment from the Docker default subnet, i.e 172.18.x.x/16. 
 ```

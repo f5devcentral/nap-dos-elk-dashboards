@@ -1,10 +1,10 @@
 version: "2.3"
 services:
   elasticsearch:
-    image: sebp/elk:7.17.1
+    image: sebp/elk:8.11.1
     restart: always
     volumes:
-      - ./logstash/conf.d:/etc/logstash/conf.d:ro
+      - ./logstash/conf.d:/etc/logstash/conf.d:rw
       - elk:/var/lib/elasticsearch
     ports:
       - 9200:9200
