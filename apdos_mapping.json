@@ -1,193 +1,92 @@
 {
-  "mappings": {
-    "properties": {
-      "@timestamp": {
-        "type": "date"
-      },
-      "@version": {
-        "type": "text",
-        "fields": {
-          "keyword": {
-            "type": "keyword",
-            "ignore_above": 256
+    "mappings": {
+      "properties" : {
+        "@timestamp" : {
+          "type" : "date"
+        },
+        "@version" : {
+          "type" : "text",
+          "fields" : {
+            "keyword" : {
+              "type" : "keyword",
+              "ignore_above" : 256
+            }
           }
-        }
-      },
-      "active_connections": {
-        "type": "integer"
-      },
-      "attack_event": {
-        "type": "keyword"
-      },
-      "bad_actors": {
-        "type": "integer"
-      },
-      "baseline_dps": {
-        "type": "integer"
-      },
-      "host": {
-        "type": "keyword"
-      },
-      "impact_rps": {
-        "type": "integer"
-      },
-      "incoming_requests": {
-        "type": "integer"
-      },
-      "incoming_rps": {
-        "type": "integer"
-      },
-      "message": {
-        "type": "text",
-        "fields": {
-          "keyword": {
-            "type": "keyword",
-            "ignore_above": 256
+        },
+        "active_connections" : {"type": "integer"},
+        "attack_event" : {"type" : "keyword"},
+        "bad_actors" : {"type" : "integer"},
+        "baseline_dps" : {"type" : "integer"},
+        "host": {
+        "type": "nested",
+        "properties": {
+          "ip": { "type": "ip" }
           }
+        },
+        "impact_rps" : {"type" : "integer"},
+        "incoming_requests" : {"type" : "integer"},
+        "incoming_rps" : {"type" : "integer"},
+        "message" : {
+          "type" : "text",
+          "fields" : {
+            "keyword" : {
+              "type" : "keyword",
+              "ignore_above" : 256
+            }
+          }
+        },
+        "mitigated_bad_actors" : {"type" : "integer"},
+        "mitigated_bad_actors_rps" : {"type" : "integer"},
+        "mitigated_by_global_rate" : {"type" : "integer"},
+        "mitigated_by_global_rate_rps" : {"type" : "integer"},
+        "mitigated_by_signatures" : {"type" : "integer"},
+        "mitigated_by_signatures_rps" : {"type" : "integer"},
+        "mitigated_connections" : {"type" : "integer"},
+        "mitigated_connections_rps" : {"type" : "integer"},
+        "redirect_global_rps" : {"type" : "integer"},
+        "redirect_bad_actor_rps" : {"type" : "integer"},
+        "redirect_signature_rps" : {"type" : "integer"},
+        "redirect_slow_rps" : {"type" : "integer"},
+        "challenge_global_rps" : {"type" : "integer"},
+        "challenge_bad_actor_rps" : {"type" : "integer"},
+        "challenge_signature_rps" : {"type" : "integer"},
+        "challenge_slow_rps" : {"type" : "integer"},
+        "block_global_rps" : {"type" : "integer"},
+        "block_bad_actor_rps" : {"type" : "integer"},
+        "block_signature_rps" : {"type" : "integer"},
+        "block_slow_rps" : {"type" : "integer"},
+        "new_bad_actors_detected" : {"type" : "integer"},
+        "product" : {"type" : "keyword"},
+        "product_version" : {"type" : "keyword"},
+        "signature" :  {"type" : "keyword"},
+        "signature_accuracy" : {"type" : "float"},
+        "signature_efficiency" : {"type" : "float"},
+        "signature_id" : {"type" : "long"},
+        "source_ip" : {"type" : "keyword"},
+        "stress_level" : {"type" : "float"},
+        "successful_tps" : {"type" : "integer"},
+        "incoming_datagrams" : {"type" : "integer"},
+        "tags" : {"type" : "keyword"},
+        "threshold_conns" : {"type" : "float"},
+        "tls_fp" : {"type" : "keyword"},
+        "ip_tls" : {"type" : "keyword"},
+        "threshold_dps" : {"type" : "float"},
+        "unit_hostname" : {"type" : "keyword"},
+        "incoming_dps" : {"type" : "integer"},
+        "unsuccessful_rps" : {"type" : "integer"},
+        "unsuccessful_requests" : {"type" : "integer"},
+	"mitigated_bad_actors_l4_rps" : {"type" : "integer"},
+        "vs_name" : {"type" : "keyword"},
+        "vs_name_al" : {"type" : "keyword"},
+	"ip" : {"type" : "keyword"},
+	"reason" : {"type" : "keyword"},
+	"outcome" : {"type" : "keyword"},
+	"date_time":{
+		     "type":"date",
+		     "format":"MMM dd yyyy HH:mm:ss"
+		    }
         }
-      },
-      "mitigated_bad_actors": {
-        "type": "integer"
-      },
-      "mitigated_bad_actors_rps": {
-        "type": "integer"
-      },
-      "mitigated_by_global_rate": {
-        "type": "integer"
-      },
-      "mitigated_by_global_rate_rps": {
-        "type": "integer"
-      },
-      "mitigated_by_signatures": {
-        "type": "integer"
-      },
-      "mitigated_by_signatures_rps": {
-        "type": "integer"
-      },
-      "mitigated_connections": {
-        "type": "integer"
-      },
-      "mitigated_connections_rps": {
-        "type": "integer"
-      },
-      "redirect_global_rps": {
-        "type": "integer"
-      },
-      "redirect_bad_actor_rps": {
-        "type": "integer"
-      },
-      "redirect_signature_rps": {
-        "type": "integer"
-      },
-      "redirect_slow_rps": {
-        "type": "integer"
-      },
-      "challenge_global_rps": {
-        "type": "integer"
-      },
-      "challenge_bad_actor_rps": {
-        "type": "integer"
-      },
-      "challenge_signature_rps": {
-        "type": "integer"
-      },
-      "challenge_slow_rps": {
-        "type": "integer"
-      },
-      "block_global_rps": {
-        "type": "integer"
-      },
-      "block_bad_actor_rps": {
-        "type": "integer"
-      },
-      "block_signature_rps": {
-        "type": "integer"
-      },
-      "block_slow_rps": {
-        "type": "integer"
-      },
-      "new_bad_actors_detected": {
-        "type": "integer"
-      },
-      "product": {
-        "type": "keyword"
-      },
-      "product_version": {
-        "type": "keyword"
-      },
-      "signature": {
-        "type": "keyword"
-      },
-      "signature_accuracy": {
-        "type": "float"
-      },
-      "signature_efficiency": {
-        "type": "float"
-      },
-      "signature_id": {
-        "type": "long"
-      },
-      "source_ip": {
-        "type": "keyword"
-      },
-      "stress_level": {
-        "type": "float"
-      },
-      "successful_tps": {
-        "type": "integer"
-      },
-      "incoming_datagrams": {
-        "type": "integer"
-      },
-      "tags": {
-        "type": "keyword"
-      },
-      "threshold_conns": {
-        "type": "float"
-      },
-      "tls_fp": {
-        "type": "keyword"
-      },
-      "ip_tls": {
-        "type": "keyword"
-      },
-      "threshold_dps": {
-        "type": "float"
-      },
-      "unit_hostname": {
-        "type": "keyword"
-      },
-      "incoming_dps": {
-        "type": "integer"
-      },
-      "unsuccessful_rps": {
-        "type": "integer"
-      },
-      "unsuccessful_requests": {
-        "type": "integer"
-      },
-      "mitigated_bad_actors_l4_rps": {
-        "type": "integer"
-      },
-      "vs_name": {
-        "type": "keyword"
-      },
-      "vs_name_al": {
-        "type": "keyword"
-      },
-      "ip": {
-        "type": "keyword"
-      },
-      "reason": {
-        "type": "keyword"
-      },
-      "outcome": {
-        "type": "keyword"
-      },
-      "date_time": {
-        "type": "date",
-        "format": "MMM dd yyyy HH:mm:ss"
-      }
-    }
-  }
+    }     
 }
+
+
