@@ -66,6 +66,7 @@
         "stress_level" : {"type" : "float"},
         "successful_tps" : {"type" : "integer"},
         "incoming_datagrams" : {"type" : "integer"},
+        "allowlist_rps" : {"type" : "integer"},
         "tags" : {"type" : "keyword"},
         "threshold_conns" : {"type" : "float"},
         "tls_fp" : {"type" : "keyword"},
